@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import NewTaskModel from "./components/NewTaskModel";
+import DescriptionModal from "./components/DescriptionModal";
 
 // A custom component for each task item
 const TaskItem = ({ task, onDelete, onComplete, onSelect, isSelected }) => {
@@ -58,6 +59,10 @@ const App = () => {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
+
+  const [descShow, setDescShow] = useState(false);
+  const handleDescShow = () => setDescShow(true);
+  const handleDescClose = () => setDescShow(false);
   
 
   // state variable for the tasks
@@ -169,6 +174,8 @@ const App = () => {
   return (
     <>
       <NewTaskModel handleClose={handleClose} handleShow={handleShow} show={show}/>
+      <DescriptionModal handleDescClose={handleDescClose} handleDescShow={handleShow} descShow={descShow} selectedTask={selectedTask} />
+
       <div className="container mx-auto p-4">
         {/* //Heading hai  */}
         <div className="bg-white p-4 rounded-lg  mb-4">
@@ -176,41 +183,41 @@ const App = () => {
         </div>
 
         {/* //Button Hain */}
-        <div className="flex flex-row-reverse justify-items-end mb-4">
-          <div className="ml-4">
-            <button className="text-white bg-blue-600 p-1 px-4 rounded-lg" onClick={handleShow}>
+        <div className="flex flex-row-reverse items-center justify-items-end mb-4 w-[94%]">
+          <div className="ml-8">
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out" onClick={handleShow}>
               Create new task
             </button>
           </div>
           <div className="flex flex-row border-solid border-2 border-blue-900 rounded-lg px-0">
-            <div className="bg-blue-200 px-4 ml-0 rounded-l-md">Sort by</div>
-            <div className="px-4 mb-0  bg-gray-400">
+            <div className="bg-blue-200 px-4 py-1 ml-0 rounded-l-md">Sort by</div>
+            <div className="px-4 py-1 mb-0  bg-gray-400">
               <button onClick={sortByDateCreated} className="">
                 Date Created
               </button>
             </div>
-            <div className="px-4 ">
+            <div className="px-4 py-1">
               <button onClick={sortByDueDate}>Due Date</button>
             </div>
           </div>
         </div>
 
         {/* Main Dabba hai */}
-        <div className="flex w-[90%] mx-auto bg-blue-200 rounded-lg">
+        <div className="flex w-[90%] h-[470px] mx-auto bg-blue-200 rounded-lg">
           {/* Task wala dabba hai  */}
           <div
             id="task-list"
-            className="mx-auto w-[70%] h-[100%] p-4 rounded-l-lg border-r-4 border-r-gray-400 "
-            style={{ height: "500px" }}
+            className="mx-auto w-[70%] h-[100%]  rounded-l-lg border-r-4 border-r-gray-400 "
+            
           >
             {/* Pending Tasks Heading */}
             <div className="mb-6">
-              <h2 className="text-2xl font-bold">Pending Tasks</h2>
+              <h2 className="text-2xl font-bold px-4 pt-4">Pending Tasks</h2>
             </div>
 
             {/* Tasks hain */}
-            <div className="mb-0 ">
-              <ul className="mb-0">
+            <div className="mr-2 ml-0">
+              <ul className="">
                 {tasks.map((task) => (
                   <TaskItem
                     key={task.id}
@@ -226,11 +233,11 @@ const App = () => {
 
             {/* Ye kya hai */}
 
-            <div className="mb-0 mt-0 flex flex-row w-1/1 h-16 border">
-              <div className="bg-blue-300 w-1/2  font-bold mt-0 mb-0 rounded-l-md flex justify-center items-center">
+            <div className=" mt-auto flex flex-row w-[100%] h-16 border ">
+              <div className="bg-blue-300 w-1/2 h-[100%] font-bold mt-0 mb-0 rounded-l-md flex justify-center items-center">
                 <span>Pending</span>
               </div>
-              <div className="w-1/2 text-center font-bold bg-blue-100 rounded-r-md flex justify-center items-center">
+              <div className="w-1/2 h-[100%] text-center font-bold bg-blue-100 rounded-r-md flex justify-center items-center">
                 Completed
               </div>
             </div>
@@ -240,8 +247,10 @@ const App = () => {
           <div
             id="description"
             className="mx-auto w-1/2 p-4 rounded-r-lg  overflow-y-auto"
-            style={{ height: "500px" }}
+            // style={{ height: "500px" }}
           >
+            <button className="rounded-md text-black"
+            onClick={handleDescShow}><h1>Description</h1></button>
             {selectedTask ? (
               <>
                 <h2 className="text-xl font-bold mb-2">
@@ -261,7 +270,7 @@ const App = () => {
                   <img
                     src={selectedTask.imageUrl}
                     alt="Task Image"
-                    className="mt-4 rounded-md"
+                    className="mt-4 rounded-md w-[200px]"
                   />
                 )}
               </>
