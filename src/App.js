@@ -65,7 +65,7 @@ const App = () => {
   const handleDescClose = () => setDescShow(false);
   
 
-  // state variable for the tasks
+  // Data for the tasks
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -202,21 +202,23 @@ const App = () => {
           </div>
         </div>
 
+
+
         {/* Main Dabba hai */}
         <div className="flex w-[90%] h-[470px] mx-auto bg-blue-200 rounded-lg">
           {/* Task wala dabba hai  */}
           <div
             id="task-list"
             className="mx-auto w-[70%] h-[100%]  rounded-l-lg border-r-4 border-r-gray-400 "
-            
           >
+
             {/* Pending Tasks Heading */}
             <div className="mb-6">
               <h2 className="text-2xl font-bold px-4 pt-4">Pending Tasks</h2>
             </div>
 
             {/* Tasks hain */}
-            <div className="mr-2 ml-0">
+            <div id="TasksList" className="mr-2 ml-0 h-[325px] overflow-y-auto">
               <ul className="">
                 {tasks.map((task) => (
                   <TaskItem
@@ -233,7 +235,7 @@ const App = () => {
 
             {/* Ye kya hai */}
 
-            <div className=" mt-auto flex flex-row w-[100%] h-16 border ">
+            <div id="Random" className="flex flex-row w-[100%] h-16 border rounded-md">
               <div className="bg-blue-300 w-1/2 h-[100%] font-bold mt-0 mb-0 rounded-l-md flex justify-center items-center">
                 <span>Pending</span>
               </div>
@@ -247,7 +249,6 @@ const App = () => {
           <div
             id="description"
             className="mx-auto w-1/2 p-4 rounded-r-lg  overflow-y-auto"
-            // style={{ height: "500px" }}
           >
             <button className="rounded-md text-black"
             onClick={handleDescShow}><h1>Description</h1></button>
