@@ -9,7 +9,7 @@ const TaskItem = ({ task, onDelete, onComplete, onSelect, isSelected }) => {
 
   return (
     <div
-      className={`flex items-center ${backgroundColor} rounded-lg justify-between p-2 border-b-2 mb-2 font-bold`}
+      className={`flex items-center ${backgroundColor} w-[100%] rounded-lg justify-between p-2 border-b-2 mb-2 font-bold`}
       onClick={() => onSelect(task.id)}
     >
       <div className="flex items-center">
@@ -37,7 +37,7 @@ const TaskItem = ({ task, onDelete, onComplete, onSelect, isSelected }) => {
             </button>
             <button
               onClick={() => onComplete(task.id)}
-              className="p-1 rounded-md bg-green-300 text-green-800 font-bold px-4 mr-2"
+              className="p-1 rounded-md bg-green-300 text-green-800 font-bold px-4 mr-2 hidden lg:block "
             >
               Complete
             </button>
@@ -63,7 +63,6 @@ const App = () => {
   const [descShow, setDescShow] = useState(false);
   const handleDescShow = () => setDescShow(true);
   const handleDescClose = () => setDescShow(false);
-  
 
   // Data for the tasks
   const [tasks, setTasks] = useState([
@@ -173,8 +172,17 @@ const App = () => {
 
   return (
     <>
-      <NewTaskModel handleClose={handleClose} handleShow={handleShow} show={show}/>
-      <DescriptionModal handleDescClose={handleDescClose} handleDescShow={handleShow} descShow={descShow} selectedTask={selectedTask} />
+      <NewTaskModel
+        handleClose={handleClose}
+        handleShow={handleShow}
+        show={show}
+      />
+      <DescriptionModal
+        handleDescClose={handleDescClose}
+        handleDescShow={handleShow}
+        descShow={descShow}
+        selectedTask={selectedTask}
+      />
 
       <div className="container mx-auto p-4">
         {/* //Heading hai  */}
@@ -182,15 +190,20 @@ const App = () => {
           <h1 className="text-6xl font-bold text-blue-800">To-Do List</h1>
         </div>
 
-        {/* //Button Hain */}
-        <div className="flex flex-row-reverse items-center justify-items-end mb-4 w-[94%]">
+        {/* //Buttons Hain */}
+        <div className="flex flex-col-reverse items-center justify-items-center mb-4 w-[94%] lg:justify-items-end lg:flex-row-reverse ">
           <div className="ml-8">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out" onClick={handleShow}>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out md:hidden sm:inline lg:inline lg:mt-0 sm:mt-4 sm:mr-8 "
+              onClick={handleShow}
+            >
               Create new task
             </button>
           </div>
           <div className="flex flex-row border-solid border-2 border-blue-900 rounded-lg px-0">
-            <div className="bg-blue-200 px-4 py-1 ml-0 rounded-l-md">Sort by</div>
+            <div className="bg-blue-200 px-4 py-1 ml-0 rounded-l-md">
+              Sort by
+            </div>
             <div className="px-4 py-1 mb-0  bg-gray-400">
               <button onClick={sortByDateCreated} className="">
                 Date Created
@@ -202,26 +215,35 @@ const App = () => {
           </div>
         </div>
 
-
-
         {/* Main Dabba hai */}
         <div className="flex w-[90%] h-[470px] mx-auto bg-blue-200 rounded-lg">
           {/* Task wala dabba hai  */}
           <div
             id="task-list"
-            className="mx-auto w-[70%] h-[100%]  rounded-l-lg border-r-4 border-r-gray-400 "
+            className="ml-0 w-[100%] h-[100%]  rounded-l-lg border-r-4 border-r-gray-400 lg:w-[70%] "
           >
-
             {/* Pending Tasks Heading */}
-            <div className="mb-6">
+            <div className="mb-6 flex flex-row justify-between">
               <h2 className="text-2xl font-bold px-4 pt-4">Pending Tasks</h2>
+              <div className="ml-8">
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out hidden md:block lg:hidden mt-4 mr-4"
+                  onClick={handleShow}
+                >
+                  Create new task
+                </button>
+              </div>
             </div>
 
             {/* Tasks hain */}
-            <div id="TasksList" className="mr-2 ml-0 h-[325px] overflow-y-auto">
-              <ul className="">
+            <div
+              id="TasksList"
+              className="mr-2 ml-0 w-[100%] h-[325px] overflow-y-auto"
+            >
+              <ul className="ml-0 w-[100%]">
                 {tasks.map((task) => (
                   <TaskItem
+                    className="w-[100%]"
                     key={task.id}
                     task={task}
                     onDelete={handleTaskDelete}
@@ -235,7 +257,10 @@ const App = () => {
 
             {/* Ye kya hai */}
 
-            <div id="Random" className="flex flex-row w-[100%] h-16 border rounded-md">
+            <div
+              id="Random"
+              className="flex flex-row w-[100%] h-16 border rounded-md"
+            >
               <div className="bg-blue-300 w-1/2 h-[100%] font-bold mt-0 mb-0 rounded-l-md flex justify-center items-center">
                 <span>Pending</span>
               </div>
@@ -248,10 +273,11 @@ const App = () => {
           {/* Description wala hai */}
           <div
             id="description"
-            className="mx-auto w-1/2 p-4 rounded-r-lg  overflow-y-auto"
+            className="mx-auto w-1/2 p-4 rounded-r-lg  overflow-y-auto hidden lg:block "
           >
-            <button className="rounded-md text-black"
-            onClick={handleDescShow}><h1>Description</h1></button>
+            <button className="rounded-md text-black" onClick={handleDescShow}>
+              <h1>Description</h1>
+            </button>
             {selectedTask ? (
               <>
                 <h2 className="text-xl font-bold mb-2">
